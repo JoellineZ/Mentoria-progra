@@ -7,6 +7,7 @@ package frc.robot;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 /**
@@ -19,6 +20,7 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  public Joystick joy1 = new Joystick(0);
   //Lo que esta afuera es universal siempre existe
   //Variable tipo sparkmax
   public SparkMax motorDerecho1;
@@ -33,7 +35,7 @@ public class Robot extends TimedRobot {
     motorIzquierdo1 = new SparkMax(3, MotorType.kBrushed);
     motorIzquierdo2 = new SparkMax(4, MotorType.kBrushed);
   }
-//Wpoilib Methods
+//Wpoilib Methods git hub commands git add "document"
   @Override
   public void robotPeriodic() {}
 
@@ -47,7 +49,16 @@ public class Robot extends TimedRobot {
   public void teleopInit() {}
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    double speed = -joy1.getRawAxis(1) * 0.6;
+    double turn = joy1.getRawAxis(1) * 0.3;
+    double left = speed + turn;
+    double right = speed - turn;
+    motorDerecho1.set(-right);
+    motorDerecho2.set(-right);
+    motorIzquierdo1.set(left);
+    motorIzquierdo2.set(left);
+  }
 
   @Override
   public void disabledInit() {}
